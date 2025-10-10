@@ -291,7 +291,7 @@
 
     const options = {
       root: document.querySelector('#text-card'),
-      threshold: 0.5, // 50% of paragraph visible triggers the event
+      threshold: 1, // 20% of paragraph visible triggers the event
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -307,7 +307,7 @@
               monitorImage.src = newSrc;
               // fade in image
               monitorImage.classList.add('visible');
-            }, 300); // match transition timing
+            }, 1000); // match transition timing
           }
         }
       });
