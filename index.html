@@ -2,30 +2,318 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Biodata</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Biodata & Hosting Info</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --accent-dark: #122e21; /* richer orange */
+      --bg: #96eba1; /* bright greenn background */
+      --text: #272928; /* dark green text */
+      --heading: #113311; /* slightly darker headings */
+      --card-opacity: 0.35; /* frosted glass opacity */
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    body {
+      background-image: url('https://i.pinimg.com/736x/3d/e5/76/3de576c16685dfec95c5a59e4ea65482.jpg');
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      gap: 1rem;
+      width: 95%;
+      max-width: 1200px;
+      padding: 1rem;
+      justify-content: flex-start;
+      margin: auto;
+    }
+
+    /* New wrapper for left column */
+    .left-column {
+      flex: 0 0 60%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: sticky; /* so it stays on scroll */
+      top: 1.5rem;
+      align-self: flex-start;
+    }
+
+    /* Liquid Glass Cards */
+    .card {
+      position: relative;
+      backdrop-filter: blur(15px); /* frosted blur */
+      background: rgba(255, 255, 255, var(--card-opacity)); /* translucent */
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      border-radius: 20px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: transform 0.4s ease;
+      animation: gentle-wobble 2s infinite;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Biodata card */
+    #biodata-card {
+      /* Already sticky by virtue of left-column */
+      flex-direction: row;
+    }
+
+    /* Monitor card below biodata */
+    #monitor-card {
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+      height: 220px; /* fixed height for consistent look */
+    }
+
+    .monitor img {
+      max-width: 100%;
+      max-height: 180px;
+      height: auto;
+      border-radius: 10px;
+      border: 2px solid var(--accent-dark);
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+      object-fit: cover;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .monitor img.visible {
+      opacity: 1;
+    }
+
+    /* Scrollable right card */
+    .scroll-card {
+      flex: 0 0 40%;
+      max-height: 90vh;
+      overflow-y: auto;
+      flex-direction: column;
+      display: flex;
+    }
+
+    /* Biodata photo */
+    .photo img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid var(--accent-dark);
+      margin-right: 1rem;
+      display: block;
+    }
+
+    /* Info inside biodata */
+    .info h2 {
+      color: var(--heading);
+      margin-top: 0;
+    }
+
+    .info p {
+      margin: 0.3rem 0;
+      color: var(--text);
+    }
+
+    /* Right card text */
+    .scroll-card h2 {
+      color: var(--heading);
+      margin-top: 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .scroll-card p {
+      color: var(--text);
+      line-height: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      color: #333;
+      padding-bottom: 1rem;
+    }
+
+    /* Responsive: stack vertically on small screens */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .left-column,
+      .scroll-card {
+        flex: 1 1 100%;
+        max-height: none;
+        position: static;
+        top: auto;
+      }
+      #biodata-card {
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+      #monitor-card {
+        height: auto;
+      }
+      .monitor img {
+        max-height: none;
+      }
+    }
+  </style>
 </head>
 <body>
-  <main class="card">
-    <!-- Profile Photo Section -->
-    <div class="photo">
-      <!-- 👇 Replace this link with your own photo URL or filename (e.g. "me.jpg") -->
-      <img src="https://via.placeholder.com/150" alt="My Photo">
+  <main class="container">
+    <div class="left-column">
+      <!-- Left Card: Sticky Biodata -->
+      <div class="card" id="biodata-card">
+        <div class="photo">
+          <!-- Replace with your photo -->
+          <img
+            src="https://i.etsystatic.com/6625904/r/il/7acd5a/1231493705/il_570xN.1231493705_jdkq.jpg"
+            alt="Manusia pohon sawuit yuhu"
+          />
+        </div>
+        <div class="info">
+          <h2>Nama: Akmal Fardiansyah</h2>
+          <p><strong>Alamat:</strong> Depok</p>
+          <p><strong>Cita-cita:</strong> Menjadi pohon sawit</p>
+          <p><strong>Hobi:</strong> Menggambar</p>
+        </div>
+      </div>
+
+      <!-- New Card: Monitor Image that changes on scroll -->
+      <div class="card" id="monitor-card">
+        <div class="monitor">
+          <img
+            id="monitor-image"
+            src="https://via.placeholder.com/300x200?text=Start"
+            alt="Monitor Display"
+            class="visible"
+          />
+        </div>
+      </div>
     </div>
 
-    <!-- Info Section -->
-    <div class="info">
-      <!-- 👇 You can freely rewrite everything below in your own language or style -->
-      <h1>Name: Your Full Name</h1>
-      <p><strong>Address:</strong> Your Address Here</p>
-      <p><strong>Life Goal:</strong> Write your life goal here.</p>
-      <p><strong>Hobby:</strong> List your hobbies here.</p>
+    <!-- Right Card: Scrollable Control Panel Text -->
+    <div class="card scroll-card" id="text-card">
+      <h2>Control Panel Hosting</h2>
+      <p>
+        Panel kontrol hosting memungkinkan pengguna untuk dengan mudah
+        mengelola lingkungan hosting web mereka tanpa memerlukan pengetahuan
+        teknis yang mendalam. Ini menyediakan antarmuka grafis untuk mengelola
+        basis data, email, manajemen domain, dan lainnya.
+      </p>
+      <p>
+        Banyak penyedia hosting menawarkan panel seperti cPanel, Plesk, atau
+        dasbor kustom. Dengan menggunakan ini, pengguna dapat meluncurkan situs
+        web, memantau kinerja, dan mengonfigurasi pengaturan dengan efisien,
+        membuat manajemen web dapat diakses oleh siapa saja.
+      </p>
+      <p>
+        Panel kontrol yang baik menyederhanakan pemeliharaan situs web,
+        mengurangi kesalahan manusia, dan mempercepat penyebaran. Pengguna dapat
+        mengakses log server, pengaturan keamanan, dan cadangan tanpa menulis
+        perintah kompleks di terminal.
+      </p>
+      <p>
+        Panel modern sering kali mencakup installer sekali klik untuk platform
+        CMS populer seperti WordPress, Joomla, dan Drupal. Ini menyederhanakan
+        pembuatan situs web dan memastikan lingkungan server dikonfigurasi dengan
+        benar.
+      </p>
+      <p>
+        Fitur lanjutan mungkin termasuk pembaruan otomatis, alat manajemen
+        domain, manajemen akun email, dasbor analitik, dan pemantauan sumber
+        daya seperti penggunaan CPU dan memori. Ini memungkinkan kinerja hosting
+        yang optimal.
+      </p>
+      <p>
+        Pada akhirnya, panel kontrol hosting memberdayakan baik pemula maupun
+        pengembang berpengalaman untuk mengelola hosting web dengan lebih
+        efisien, menawarkan antarmuka yang intuitif sambil mempertahankan
+        kemampuan server yang kuat di latar belakang.
+      </p>
     </div>
   </main>
 
-  <footer>
-    <p>© 2025 — My Biodata Page</p>
-  </footer>
+  <script>
+    // Vanilla JS: subtle jelly effect on scroll for cards
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          const scale = 1 + Math.min(scrollY / 3000, 0.03); // max 3% stretch
+          document.querySelectorAll('.card').forEach((card) => {
+            card.style.transform = `scaleY(${scale})`;
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
+
+      // Reset scale after 200ms of no scroll
+      clearTimeout(window.resetScale);
+      window.resetScale = setTimeout(() => {
+        document.querySelectorAll('.card').forEach((card) => {
+          card.style.transform = 'scaleY(1)';
+        });
+      }, 200);
+    });
+
+    // Monitor image change based on paragraph scroll in #text-card
+    const imageMap = [
+      'https://www.exabytes.co.id/blog/wp-content/uploads/2023/08/mekanisme-cara-kerja-hosting.webp',
+      'https://cdn.mos.cms.futurecdn.net/XfVFJBiMTCcMbvjpVe8D29-1200-80.jpg',
+      'https://media.gettyimages.com/id/1256530089/photo/machine-gears.jpg?s=612x612&w=gi&k=20&c=Z6NbA5jfejjfr10Bi-j-DwKpFbet1FAG0RYkKceIYaY=',
+      'https://lh3.googleusercontent.com/proxy/9iZMC91ElMgMECXEbFLdmHff803dLHyNOYEfLaq80P812u023JUkPD4Wq4ROiXyIzAfWRBp-jeJnZWnlgkNOhFbSlSTs-YxZ623q',
+      'https://www.cpanel.net/wp-content/uploads/2025/07/360Monitoring-WHM-Product-Overview.webp',
+      'https://i.pinimg.com/736x/25/37/92/253792ebd7cc96b3da6703bff9c61c05.jpg',
+    ];
+
+    const monitorImage = document.getElementById('monitor-image');
+    const paragraphs = document.querySelectorAll('#text-card p');
+
+    const options = {
+      root: document.querySelector('#text-card'),
+      threshold: 0.5, // 50% of paragraph visible triggers the event
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = Array.from(paragraphs).indexOf(entry.target);
+          const newSrc = imageMap[index];
+
+          if (monitorImage.src !== newSrc) {
+            // fade out image
+            monitorImage.classList.remove('visible');
+            setTimeout(() => {
+              monitorImage.src = newSrc;
+              // fade in image
+              monitorImage.classList.add('visible');
+            }, 300); // match transition timing
+          }
+        }
+      });
+    }, options);
+
+    paragraphs.forEach((p) => observer.observe(p));
+  </script>
 </body>
 </html>
