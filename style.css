@@ -1,64 +1,112 @@
 :root {
-  --accent: #22c55e;   /* main green */
-  --accent-dark: #15803d;
-  --bg: #ecfdf5;
-  --card-bg: #ffffff;
-  --text: #222;
-  --muted: #555;
+  --accent-dark: #122e21;    /* richer orange */
+  --bg: #96eba1;             /* bright greenn background */
+  --text: #272928;           /* dark green text */
+  --heading: #113311;        /* slightly darker headings */
+  --card-opacity: 0.35;      /* frosted glass opacity */
 }
 
 * {
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  font-family: 'Quicksand', sans-serif;
 }
 
 body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+  background-image: url('https://i.pinimg.com/736x/3d/e5/76/3de576c16685dfec95c5a59e4ea65482.jpg');
 }
 
+.container {
+  display: flex;
+  gap: 1rem;
+  width: 95%;
+  max-width: 1200px;
+  padding: 1rem;
+  justify-content: flex-start;
+}
+
+/* Liquid Glass Cards */
 .card {
+  position: relative;
+  backdrop-filter: blur(15px);               /* frosted blur */
+  background: rgba(255, 255, 255, var(--card-opacity));  /* translucent */
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s ease;
+  animation: gentle-wobble 2s infinite;       /* default wobble */
+}
+
+
+/* Sticky left card */
+.sticky-card {
+  flex: 0 0 60%;
+  position: sticky;
+  top: 1.5rem;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 1.5rem;
-  background: var(--card-bg);
-  padding: 1.5rem 2rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 100, 0, 0.15);
-  border: 3px solid var(--accent);
-  max-width: 600px;
 }
 
+/* Scrollable right card */
+.scroll-card {
+  flex: 0 0 40%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Biodata photo */
 .photo img {
-  width: 150px;
-  height: 150px;
-  border-radius: 8px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
-  border: 3px solid var(--accent-dark);
+  border-radius: 8px;
+  border: 2px solid var(--accent-dark);
+  margin-right: 1rem;
+  display: block;
 }
 
-.info h1 {
-  font-size: 1.3rem;
-  color: var(--accent-dark);
-  margin-bottom: 0.5rem;
+/* Info inside biodata */
+.info h2 {
+  color: var(--heading);
+  margin-top: 0;
 }
 
 .info p {
   margin: 0.3rem 0;
-  font-size: 1rem;
-  color: var(--muted);
+  color: var(--text);
 }
 
+/* Right card text */
+.scroll-card h2 {
+  color: var(--heading);
+  margin-top: 0;
+}
+
+.scroll-card p {
+  color: var(--text);
+  line-height: 1.5rem;
+}
+
+/* Footer */
 footer {
   margin-top: 2rem;
   text-align: center;
-  color: #666;
-  font-size: 0.9rem;
+  color: #333;
+  padding-bottom: 1rem;
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .sticky-card, .scroll-card {
+    flex: 1 1 100%;
+    max-height: none;
+  }
+  .sticky-card {
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
 }
